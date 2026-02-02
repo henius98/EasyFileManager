@@ -40,29 +40,22 @@ def process_files(root_path, prefix=None, suffix=None, action='d'):
                             print("Skipping deletion.")
                             break
                     elif action == 'r':
-                        new_name = filename + "_"
-                        # new_name = filename[:-1] # + ".srt"    #input("Enter the new name for the file (including extension): ")
-                        new_path = os.path.join(root, new_name)
-                        # action1 = input(f"Are you sure you want to rename '{filename}' to '{new_name}'? (y/N): ")
-                        try:
-                            os.rename(full_path, new_path)
-                            print(f"Renamed '{full_path}' to '{new_path}'")
-                            break
-                        except FileNotFoundError:
-                            print(
-                                f"Error: Original file not found - {full_path}")
-                            break
-                        except FileExistsError:
-                            print(
-                                f"Error: A file with the name '{new_name}' already exists in this directory.")
-                            break
-                        except PermissionError:
-                            print(
-                                f"Error: Permission denied to rename - {full_path}")
-                            break
-                        except OSError as e:
-                            print(f"Error renaming {full_path}: {e}")
-                            break
+                        if filename.endswith("_en.srt"):
+                            new_filename = filename.replace("_en.srt", ".srt")
+                            new_full_path = os.path.join(root, new_filename)
+
+                            try:
+                                os.rename(full_path, new_full_path)
+                                print(f"Renamed: {full_path} -> {new_full_path}")
+                            except FileNotFoundError:
+                                print(f"Error: File not found - {full_path}")
+                            except FileExistsError:
+                                print(f"Error: Target already exists - {new_full_path}")
+                            except PermissionError:
+                                print(f"Error: Permission denied - {full_path}")
+                            except OSError as e:
+                                print(f"Error renaming {full_path}: {e}")
+                        break
                     elif action == 's':
                         print("Skipping file.")
                         break
@@ -91,11 +84,12 @@ def process_files(root_path, prefix=None, suffix=None, action='d'):
 if __name__ == "__main__":
     log = configureLogger('video_processor')
     # input("Enter the path to the directory you want to process: ")
-    target_path = "C:\\Users\\ROG_Q\\Desktop\\AWS"
+    target_path = "/home/henius/Downloads/Ultimate AWS Certified Solutions Architect Associate SAA-C03/"
     # input("Enter the prefix to filter by (leave blank for none): ") or None
     prefix_filter = None
     # input("Enter the suffix to filter by (leave blank for none): ") or None
-    suffix_filter = "Hands On.mp4"
+    # suffix_filter = "Hands On.mp4"
+    suffix_filter = "_en.srt"
 
     process_files(target_path, prefix_filter, suffix_filter, 'r')
     # print(f"{int(9223372036854775807 // 3600)}")
