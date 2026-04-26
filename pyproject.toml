@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "easy-file-manager"
+version = "0.1.0"
+description = "A simple file management utility for batch deleting, renaming, and video duration calculation."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Antigravity R&D", email = "research@antigravity.ai"}
+]
+dependencies = [
+    "moviepy"
+]
+
+[project.scripts]
+easy-file-manager = "easy_file_manager.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
